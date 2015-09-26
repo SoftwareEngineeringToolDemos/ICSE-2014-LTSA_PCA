@@ -1,0 +1,85 @@
+pca
+
+TeleAssistant = 
+(
+	?<1.0>getParameters -> PARAMETERS
+	
+	| ?<1.0> panic -> ALARM_HIGH
+	  
+	| ?<1.0> stop -> STOP
+
+),
+
+PARAMETERS = 
+(
+	?<1.0> vitalParameters -> !<1.0> analyseParameters -> <1.0> storeParameters ->
+		?<1.0> diagnosis -> <1.0> analyseDiagnose ->
+			(
+				!<0.12> alarmMid -> <1.0> activeAlertMode -> ?<1.0>notify -> TeleAssistant
+				| !<0.46> changeDose -> CHANGE_DOSE
+				| !<0.42> changeDrug -> CHANGE_DRUG
+			)
+		
+),
+
+ALARM_HIGH = 
+(
+	!<1.0> alarmHigh -> <1.0> activeEmergencyMode -> ?<1.0>notify -> TeleAssistant
+	
+),
+
+CHANGE_DOSE = 
+(
+		?<1.0> notifyDoseChanged -> TeleAssistant
+		
+),
+
+CHANGE_DRUG = 
+(
+		?<1.0> notifyDrugChanged -> TeleAssistant
+).
+
+FAS =
+(
+	?<1.0> alarmMid -> <1.0> registerSituation -> !<1.0> callTeamA -> <1.0> registerCall -> ?<1.0> notifyFAS -> <1.0> registerConfirmation ->
+		(!<0.96> notify -> FAS | ~!<0.04> notify -> ERROR)
+	| ?<1.0> alarmHigh -> !<1.0> callTeamB -> ?<1.0> notifyFAS ->
+		(!<0.96> notify -> FAS | ~!<0.04> notify -> ERROR)
+).
+
+
+EMERGENCY_TEAM =
+(
+	?<1.0> callTeamA -> 
+		<1.0> prepare -> <1.0> startTravel -> !<1.0> notifyFAS -> EMERGENCY_TEAM
+	|
+	?<1.0> callTeamB -> 
+		<1.0> prepare -> <1.0> startTravel -> !<1.0> notifyFAS -> EMERGENCY_TEAM
+	
+).
+
+
+
+
+LAB = 
+(
+	?<1.0> analyseParameters -> <1.0> analysis ->
+		(!<0.98> diagnosis -> LAB | ~!<0.02> diagnosis -> ERROR)
+).
+
+
+Patient = 
+(
+	!<0.6> getParameters -> <1.0> read -> !<1.0> vitalParameters -> Patient
+	| !<0.3> panic -> Patient
+	| !<0.1> stop -> STOP
+	| ?<1.0> changeDrug -> <1.0> apply -> 
+		(!<0.99> notifyDrugChanged -> Patient | ~!<0.01> notifyDrugChanged -> ERROR) 
+	| ?<1.0> changeDose -> <1.0> apply -> 
+		(!<0.98> notifyDoseChanged -> Patient | ~!<0.02> notifyDoseChanged -> ERROR) 
+	
+).
+
+
+||TA_SYS = (TeleAssistant || FAS || LAB || Patient || EMERGENCY_TEAM).
+||ITA_SYS = (TeleAssistant || FAS || LAB || Patient || EMERGENCY_TEAM) @ {getParameters, panic, stop, notify, notifyDrugChanged, notifyDoseChanged, diagnosis,alarmMid, alarmHigh, changeDrug, changeDose}.

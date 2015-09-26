@@ -1,0 +1,99 @@
+pca
+
+BACKEND = (?<1.0> req_content ->
+			!<1.0> requestCachedPage -> 
+				(?<1.0> sendCachedPage -> BACKENDRESULT
+				|?<1.0> cacheMiss -> !<1.0>query -> ?<1.0> queryResult -> BACKENDRESULT
+				)
+			),
+BACKENDRESULT = (!<1.0> rep_content -> BACKEND).
+
+CACHE = (?<1.0> requestCachedPage -> <1.0> checkCache -> 
+			(!<0.7> sendCachedPage -> CACHE
+			|!<0.3> cacheMiss -> CACHE
+			)
+		).
+
+DB = (?<1.0> query -> <1.0> analyseQuery ->
+		(<0.4> cached -> DBRESULT
+		|<0.6> processQuery -> DBRESULT
+		)
+	 ),
+DBRESULT = (!<1.0> queryResult -> DB).
+
+
+
+SERVER = (?<1.0> request -> <1.0> process ->
+			!<1.0> req_content -> ?<1.0> rep_content ->
+			<1.0> content -> 
+			(!<0.99> reply -> SERVER 
+			| ~!<0.01> reply -> ERROR
+			)
+		  ).
+
+ISERVER = (?<1.0> request -> 
+			(!<0.99>reply -> ISERVER
+			|~!<0.01> reply -> ERROR
+			)
+		  ).
+
+CLIENT = (!<1.0> request -> <1.0> preparePage -> ?<1.0> reply -> <1.0> showPage -> CLIENT ).
+||ICLIENT = CLIENT @ {request, reply}.
+
+
+//-------------------------------------------------------------------------------------------- //
+
+// 1 Server - 2 Clients
+||SERVER2 = SERVER / { {c1.request, c2.request}/request, 
+				   	 {c1.reply, c2.reply}/reply}.
+
+||CSERVER2 = (SERVER2 || BACKEND || CACHE || DB) .
+||ICSERVER2 = CSERVER2 @{c1.request, c2.request, c1.reply, c2.reply}.
+||SYS2 = (CSERVER2 || c1:CLIENT || c2:CLIENT).
+||ISYS2 = (ICSERVER2 || c1:ICLIENT || c2:ICLIENT).
+
+//-------------------------------------------------------------------------------------------- //
+
+// 1 Server - 3 Clients
+||SERVER3 = SERVER / { {c1.request, c2.request, c3.request}/request, 
+				   	 {c1.reply, c2.reply, c3.reply}/reply}.
+
+||CSERVER3 = (SERVER3 || BACKEND || CACHE || DB) .
+||ICSERVER3 = CSERVER3 @{c1.request, c2.request, c3.request, c1.reply, c2.reply, c3.reply}.
+||SYS3 = (CSERVER3 || c1:CLIENT || c2:CLIENT || c3:CLIENT).
+||ISYS3 = (ICSERVER3 || c1:ICLIENT || c2:ICLIENT || c3:ICLIENT).
+
+//-------------------------------------------------------------------------------------------- //
+
+// 1 Server - 4 Clients
+||SERVER4 = SERVER / { {c1.request, c2.request, c3.request, c4.request}/request, 
+				   	 {c1.reply, c2.reply, c3.reply, c4.reply}/reply}.
+
+||CSERVER4 = (SERVER4 || BACKEND || CACHE || DB) .
+||ICSERVER4 = CSERVER4 @{c1.request, c2.request, c3.request, c4.request, c1.reply, c2.reply, c3.reply, c4.reply}.
+||SYS4 = (CSERVER4 || c1:CLIENT || c2:CLIENT || c3:CLIENT || c4:CLIENT).
+||ISYS4 = (ICSERVER4 || c1:ICLIENT || c2:ICLIENT || c3:ICLIENT || c4:ICLIENT).
+
+//-------------------------------------------------------------------------------------------- //
+
+// 1 Server - 5 Clients
+||SERVER5 = SERVER / { {c1.request, c2.request, c3.request, c4.request, c5.request}/request, 
+				   	 {c1.reply, c2.reply, c3.reply, c4.reply, c5.reply}/reply}.
+
+||CSERVER5 = (SERVER5 || BACKEND || CACHE || DB) .
+||ICSERVER5 = CSERVER5 @{c1.request, c2.request, c3.request, c4.request, c5.request, c1.reply, c2.reply, c3.reply, c4.reply, c5.reply}.
+||SYS5 = (CSERVER5 || c1:CLIENT || c2:CLIENT || c3:CLIENT || c4:CLIENT || c5:CLIENT).
+||ISYS5 = (ICSERVER5 || c1:ICLIENT || c2:ICLIENT || c3:ICLIENT || c4:ICLIENT || c5:ICLIENT).
+
+//-------------------------------------------------------------------------------------------- //
+
+// 1 Server - 6 Clients
+||SERVER6 = SERVER / { {c1.request, c2.request, c3.request, c4.request, c5.request, c6.request}/request, 
+				   	 {c1.reply, c2.reply, c3.reply, c4.reply, c5.reply, c6.reply}/reply}.
+
+||CSERVER6 = (SERVER6 || BACKEND || CACHE || DB) .
+||ICSERVER6 = CSERVER6 @{c1.request, c2.request, c3.request, c4.request, c5.request, c6.request, c1.reply, c2.reply, c3.reply, c4.reply, c5.reply, c6.reply}.
+||SYS6 = (CSERVER6 || c1:CLIENT || c2:CLIENT || c3:CLIENT || c4:CLIENT || c5:CLIENT || c6:CLIENT).
+||ISYS6 = (ICSERVER6 || c1:ICLIENT || c2:ICLIENT || c3:ICLIENT || c4:ICLIENT || c5:ICLIENT || c6:ICLIENT).
+
+//-------------------------------------------------------------------------------------------- //

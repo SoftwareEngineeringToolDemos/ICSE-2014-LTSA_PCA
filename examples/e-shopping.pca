@@ -1,0 +1,108 @@
+pca
+
+NEW_CLIENT  = (!<1.0> signUp -> 
+					?<1.0> confirmation -> NEW_SEARCH ),
+NEW_SEARCH  = (!<1.0> searchProduct -> !<1.0> buy ->
+				(!<0.15> continueSearch -> NEW_SEARCH
+				|!<0.6> normalShipping -> NEW_CHECKOUT
+				|!<0.25> expressShipping -> NEW_CHECKOUT
+				)
+			),
+NEW_CHECKOUT = (?<1.0> productsShipped -> !<1.0> checkout ->
+			!<1.0> logout -> ?<1.0> logoutConfirmation -> NEW_CLIENT
+		   ).
+			
+RETURNING_CLIENT = (!<1.0> login -> 
+						?<1.0> confirmation -> RETURNING_SEARCH
+						),
+RETURNING_SEARCH = (!<1.0> searchProduct -> !<1.0> buy ->
+						(!<0.2> continueSearch -> RETURNING_SEARCH
+						|!<0.5> normalShipping -> RETURNING_CHECKOUT
+						|!<0.3> expressShipping -> RETURNING_CHECKOUT
+						)
+					),
+RETURNING_CHECKOUT = (?<1.0> productsShipped -> !<1.0> checkout ->
+			!<1.0> logout -> ?<1.0> logoutConfirmation -> RETURNING_CLIENT
+		   ).
+
+
+
+AUTH_SERVICE = (?<1.0> loginUser -> <1.0> checkCredentials ->
+					(!<0.97> authenticatedUser -> AUTH_SERVICE
+					|~!<0.03> authenticatedUser -> ERROR
+					)
+				|?<1.0> signUpUser -> <1.0> createUser ->
+					(!<0.97> createdUser -> AUTH_SERVICE
+					|~!<0.03> createdUser -> ERROR
+					)
+				  
+				|?<1.0> logoutUser -> <1.0> finishSession ->
+					(!<0.97> logoutUserConfirmation -> AUTH_SERVICE
+					|~!<0.03> logoutUserConfirmation -> ERROR
+					)
+				).
+
+
+SHIPPING_SERVICE = (?<1.0> normalShippingRequest -> <1.0> processNormalRequest -> CONFIRMATION
+					|?<1.0> expresssShippingRequest -> <1.0> processExpressRequest -> CONFIRMATION
+					),
+
+CONFIRMATION = (!<0.95> shippingConfirmation -> SHIPPING_SERVICE
+				|~!<0.05> shippingConfirmation -> ERROR
+				).
+
+PAYMENT_SERVICE = (?<1.0> checkoutProducts -> <1.0> registerPayment ->
+					(!<0.9> confirmPayment -> PAYMENT_SERVICE
+					|~!<0.1> confirmPayment -> ERROR
+					)
+				  ).				
+E_COMMERCE = (?<1.0> signUp -> !<1.0> signUpUser -> 
+				?<1.0> createdUser -> !<1.0> confirmation -> SEARCH_PRODUCT
+				
+			  |?<1.0> login -> !<1.0> loginUser -> 
+				?<1.0> authenticatedUser -> !<1.0> confirmation  -> SEARCH_PRODUCT
+				
+			),
+
+SEARCH_PRODUCT = (?<1.0> searchProduct -> ?<1.0> buy -> <1.0> registerProduct ->
+					(?<1.0> continueSearch -> SEARCH_PRODUCT
+					|?<1.0> normalShipping -> !<1.0> normalShippingRequest -> PROCESS_SHIPPING
+					|?<1.0> expressShipping -> !<1.0> expresssShippingRequest -> PROCESS_SHIPPING
+					)
+				),
+PROCESS_SHIPPING = (?<1.0> shippingConfirmation -> !<1.0> productsShipped -> ?<1.0> checkout ->
+					!<1.0> checkoutProducts -> ?<1.0> confirmPayment -> ?<1.0>logout -> 
+					!<1.0> logoutUser -> ?<1.0> logoutUserConfirmation -> !<1.0> logoutConfirmation -> E_COMMERCE).
+
+
+
+||E_COMMERCE_TWO_CLIENTS = (E_COMMERCE / {
+											{new.signUp}/signUp, 
+											{ret.login}/login,
+											{new.confirmation, ret.confirmation}/confirmation,
+											{new.searchProduct, ret.searchProduct}/searchProduct,
+											{new.buy, ret.buy}/buy,
+											{new.continueSearch, ret.continueSearch}/continueSearch,
+											{new.normalShipping, ret.normalShipping}/normalShipping,
+											{new.expressShipping, ret.expressShipping}/expressShipping,
+											{new.productsShipped, ret.productsShipped}/productsShipped,
+											{new.checkout, ret.checkout}/checkout,
+											{new.logout, ret.logout}/logout,
+											{new.logoutConfirmation, ret.logoutConfirmation}/logoutConfirmation
+										 } 
+						    ).
+
+||RET_CLIENT = ret:RETURNING_CLIENT.
+||N_CLIENT = new:NEW_CLIENT.
+
+//||SYS = ( (E_COMMERCE_TWO_CLIENTS || ret:RETURNING_CLIENT || new:NEW_CLIENT) || AUTH_SERVICE || SHIPPING_SERVICE || PAYMENT_SERVICE) 
+//			@{new.signUp, ret.login, ret.searchProduct, new.searchProduct, new.buy, ret.buy, new.normalShipping, checkoutProducts,
+//					ret.normalShipping, new.expressShipping, ret.expressShipping, new.checkout, ret.checkout, new.logout, ret.logout}.
+
+||SYS = ( ([(RET_CLIENT, 0.35);(N_CLIENT, 0.65) || E_COMMERCE_TWO_CLIENTS]) || AUTH_SERVICE || SHIPPING_SERVICE || PAYMENT_SERVICE) 
+			@{new.signUp, ret.login, ret.searchProduct, new.searchProduct, new.buy, ret.buy, new.normalShipping, checkoutProducts,
+					ret.normalShipping, new.expressShipping, ret.expressShipping, new.checkout, ret.checkout, new.logout, ret.logout}.
+
+
+
+

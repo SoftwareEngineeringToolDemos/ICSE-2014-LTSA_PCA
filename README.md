@@ -8,7 +8,7 @@ Link of the tool demonstration video [here](https://www.youtube.com/watch?v=moIk
 
 Information added to the repository as of 09/26/2015
 
-1. The tool Jar file
+1. [The tool Jar file] (https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar)
 2. Folder containing sample PCA files upon which the LTSA tool shall be run
 
 This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Emerson Murphy-Hill](https://github.com/CaptainEmerson). 

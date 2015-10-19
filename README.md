@@ -10,3 +10,5 @@ Information added to the repository as of 09/26/2015
 
 1. The tool Jar file
 2. Folder containing sample PCA files upon which the LTSA tool shall be run
+
+This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Emerson Murphy-Hill](https://github.com/CaptainEmerson). 

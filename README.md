@@ -1,6 +1,8 @@
 # ICSE-2014-LTSA_PCA
 
-## Authors: Pedro Rodrigues, Emil Lupu, Jeff Kramer
+***
+
+LTSA-PCA is an extension of the LTSA model checker that supports the specification, visualisation and failure analysis of composable, probabilistic behaviour of component-based systems, modelled as Probabilistic Component Automata (PCA)
 
 Link of the paper [here](http://www.doc.ic.ac.uk/~pr1810/publications/LTSA-PCA-ICSE2014-Demo.pdf)
 

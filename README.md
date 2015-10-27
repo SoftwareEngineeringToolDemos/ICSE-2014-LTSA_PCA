@@ -14,4 +14,9 @@ Information added to the repository as of 09/26/2015
 3. [Sample PCA files] (https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/tree/master/examples) upon which the LTSA tool shall be run
 4. Brief [video] (https://www.youtube.com/watch?v=moIkx8JHE7o) of tool
 
+In this repository, for SANDO you will find:
+
+- :white_check_mark: Source code 
+- :white_check_mark: [The original tool](https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar) (available)
+
 This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Dr. Emerson Murphy-Hill](https://github.com/CaptainEmerson). Thanks to Dr. Jeff Kramer and colleagues for their help in establishing this repository

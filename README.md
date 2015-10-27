@@ -7,7 +7,6 @@ This repository contains information related to the tool LTSA_PCA presented in t
 
 This repository *is not* the original repository for this tool. Here are some links to the original project:
 
-Information added to the repository as of 09/26/2015
 
 1. [The Official Project Page](http://wp.doc.ic.ac.uk/dse/software/ltsa-pca/)
 2. [The tool Jar file] (https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar)

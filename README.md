@@ -12,4 +12,4 @@ Information added to the repository as of 09/26/2015
 2. [The tool Jar file] (https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar)
 3. Folder containing sample PCA files upon which the LTSA tool shall be run
 
-This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Emerson Murphy-Hill](https://github.com/CaptainEmerson). 
+This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Dr. Emerson Murphy-Hill](https://github.com/CaptainEmerson). Thanks to Dr. Jeff Kramer and colleagues for their help in establishing this repository

@@ -31,9 +31,19 @@ Steps to create a VM using this build
 * Also copies the LTSA-PCA jar file and examples to the Desktop.
 
 ***
+Note
+-----
+*  Username: vagrant
+*  Password: vagrant
 
+***
 Reference
 -----
 1. http://askubuntu.com/questions/56104/how-can-i-install-sun-oracles-proprietary-java-jdk-6-7-8-or-jre
 2. https://github.com/pussinboots/vagrant-devel/blob/master/provision/packages/java8.sh
 3. https://docs.vagrantup.com/v2/getting-started/
+
+***
+Acknowledgements
+-----
+I would like to thank the uploader of the ubuntu desktop basebox "box-cutter/ubuntu1404-desktop" for making it available on vagrant cloud.

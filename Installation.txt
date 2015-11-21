@@ -1,0 +1,11 @@
+1. Download the LTSA-PCa software and examples from the link https://wp.doc.ic.ac.uk/dse/software/ltsa-pca/
+2. Install JDK 8 by typing the following commands in the terminal
+    1. sudo add-apt-repository ppa:openjdk-r/ppa
+    2. sudo apt-get update 
+    3. sudo apt-get install openjdk-8-jdk
+    4. If more than one version of java has been installed then set the default version as 8 by the coomand - sudo update-alternatives --config java
+3. Right click on the LTSA-PCA.jar file and select properties.
+4. Under Permissions tab select the option 'Allow executing file as program'
+5. Under 'Open with' select 'OpenJDK JAVA 8 Runtime' as the default application.
+6. Double click on the LTSA-PCA.jar file to execute the application.
+

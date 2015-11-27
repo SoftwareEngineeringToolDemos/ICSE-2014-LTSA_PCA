@@ -18,8 +18,8 @@ Vagrant.configure(2) do |config|
 	# Install Open JDK 7
 	#Command to remove desktop Lock
     #gsettings set org.gnome.desktop.screensaver lock-enabled false
-    #Command to add java repo
-    1add-apt-repository ppa:webupd8team/java
+    Command to add java repo
+    add-apt-repository ppa:webupd8team/java
     #Update Command 
     apt-get update -qq
     echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -36,9 +36,11 @@ Vagrant.configure(2) do |config|
     #rm -rf /home/vagrant/Desktop/examples1
 	
 	#Creating Desktop help files
-	sudo wget -O /home/vagrant/Desktop/desktop.tar.gz "https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/tree/master/build-vm/desktop.tar.gz"
+	sudo wget -O /home/vagrant/Desktop/desktop.tar.gz "https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/raw/master/build-vm/desktop.tar.gz"
 	tar zxvf /home/vagrant/Desktop/desktop.tar.gz -C /home/vagrant/Desktop/
-        mv LTSA-PCA.jar /home/vagrant/Desktop/LTSA-PCA_Binary/LTSA-PCA.jar
+		sudo chmod a+x /home/vagrant/Desktop/*
+		sudo chmod a+x /home/vagrant/Desktop/LTSA-PCA_Binary/*
+        #mv LTSA-PCA.jar /home/vagrant/Desktop/LTSA-PCA_Binary/LTSA-PCA.jar
         rm /home/vagrant/Desktop/desktop.tar.gz
 
 	# Add Verily as startup application

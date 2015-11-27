@@ -1,33 +1,25 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-#__author__ = "Sattwik Pati aka ICE!V!an"
-#__copyright__ = "NA"
-#__license__ = "NA"
-#__version__ = "NA"
-
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
+# Vagrant configuration
 Vagrant.configure(2) do |config|
-  # Vagrant Box being used
-  config.vm.box = "box-cutter/ubuntu1404-desktop"
-
-  #Display settings
-   config.vm.provider "virtualbox" do |vb|
-   # Display the VirtualBox GUI when booting the machine
+  # Configures the base vagrant box found in https://atlas.hashicorp.com/
+  config.vm.box = "boxcutter/ubuntu1404-desktop"
+  # Configure the VirtualBox provider for the VM
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
     vb.gui = true
-  
-     # Customize the amount of memory on the VM:
+    # Customize the amount of memory on the VM:
     vb.memory = "2048"
+	# Provide a name to the VM
+	vb.name = "NewHanover-spati2-LTSA-PCA"
   end
-  #Provisions to be added to the VM
+ 
+  # Use shell script to install specific software required to
+  # run the tool
   config.vm.provision "shell", inline: <<-SHELL
-    #Command to remove desktop Lock
-    gsettings set org.gnome.desktop.screensaver lock-enabled false
+	# Install Open JDK 7
+	#Command to remove desktop Lock
+    #gsettings set org.gnome.desktop.screensaver lock-enabled false
     #Command to add java repo
-    add-apt-repository ppa:webupd8team/java
+    1add-apt-repository ppa:webupd8team/java
     #Update Command 
     apt-get update -qq
     echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -36,11 +28,37 @@ Vagrant.configure(2) do |config|
     apt-get install --yes oracle-java8-installer
     yes "" | apt-get -f install
     #LTSA-PCA tool download
-    sudo wget -O /home/vagrant/Desktop/LTSA-PCA.jar "https://dl.dropboxusercontent.com/u/996431/software/ltsa-pca/LTSA-PCA.jar"
-    sudo wget -O /home/vagrant/Desktop/examples.zip "https://dl.dropboxusercontent.com/u/996431/software/ltsa-pca/examples.zip"
-    mkdir /home/vagrant/Desktop/examples
-    unzip /home/vagrant/Desktop/examples.zip -d /home/vagrant/Desktop/examples1
-    mv /home/vagrant/Desktop/examples1/examples /home/vagrant/Desktop
-    rm -rf /home/vagrant/Desktop/examples1
-    SHELL
+    #sudo wget -O /home/vagrant/Desktop/LTSA-PCA.jar "https://dl.dropboxusercontent.com/u/996431/software/ltsa-pca/LTSA-PCA.jar"
+    #sudo wget -O /home/vagrant/Desktop/examples.zip "https://dl.dropboxusercontent.com/u/996431/software/ltsa-pca/examples.zip"
+    #mkdir /home/vagrant/Desktop/examples
+    #unzip /home/vagrant/Desktop/examples.zip -d /home/vagrant/Desktop/examples1
+    #mv /home/vagrant/Desktop/examples1/examples /home/vagrant/Desktop
+    #rm -rf /home/vagrant/Desktop/examples1
+	
+	#Creating Desktop help files
+	sudo wget -O /home/vagrant/Desktop/desktop.tar.gz "https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/tree/master/build-vm/desktop.tar.gz"
+	tar zxvf /home/vagrant/Desktop/desktop.tar.gz -C /home/vagrant/Desktop/
+        mv LTSA-PCA.jar /home/vagrant/Desktop/LTSA-PCA_Binary/LTSA-PCA.jar
+        rm /home/vagrant/Desktop/desktop.tar.gz
+
+	# Add Verily as startup application
+	sudo mkdir "/home/vagrant/.config/autostart"
+	sudo cp Desktop/LTSA-PCA.desktop /home/vagrant/.config/autostart/LTSA-PCA.desktop
+		
+	# Remove unnecessary launcher applications
+	sudo rm -f "/usr/share/applications/ubuntu-amazon-default.desktop"
+	sudo rm -f "/usr/share/applications/libreoffice-calc.desktop"
+	sudo rm -f "/usr/share/applications/libreoffice-writer.desktop"
+	sudo rm -f "/usr/share/applications/libreoffice-impress.desktop"
+	sudo rm -f "/usr/share/applications/ubuntu-software-center.desktop"
+
+	# Disable screen lockout
+	mv /home/vagrant/Desktop/login_desktop.sh /home/vagrant/login_desktop.sh
+	sudo update-desktop-database
+	sudo cp /home/vagrant/Desktop/login_desktop.sh.desktop /etc/xdg/autostart/login_desktop.sh.desktop
+	rm /home/vagrant/Desktop/login_desktop.sh.desktop
+	# Reboot the VM
+	sudo reboot
+	
+  SHELL
 end

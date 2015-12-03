@@ -17,7 +17,7 @@ In this repository, for LTSA_PCA you will find:
 
 - :x: Source code (not available)
 - :white_check_mark: [The original tool](https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar) (available)
-- :white_check_mark: [Virtual Machine containing the tool]https://drive.google.com/open?id=0B93wGttsGeeMOWdxUDJKOGYwVDQ (available)
+- :white_check_mark: [Virtual Machine containing the tool](https://drive.google.com/open?id=0B93wGttsGeeMOWdxUDJKOGYwVDQ) (available)
 
 This tool is licensed under General Public License(GPL).
 

@@ -18,4 +18,6 @@ In this repository, for LTSA_PCA you will find:
 - :x: Source code (not available)
 - :white_check_mark: [The original tool](https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar) (available)
 
+This tool is licensed under General Public License(GPL).
+
 This repository was constructed by [Sattwik Pati](https://github.com/spati2) under the supervision of [Dr. Emerson Murphy-Hill](https://github.com/CaptainEmerson). Thanks to Dr. Jeff Kramer and colleagues for their help in establishing this repository

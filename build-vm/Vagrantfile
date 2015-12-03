@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
 	# Install Open JDK 7
 	#Command to remove desktop Lock
     #gsettings set org.gnome.desktop.screensaver lock-enabled false
-    Command to add java repo
+    #Command to add java repo
     add-apt-repository ppa:webupd8team/java
     #Update Command 
     apt-get update -qq

@@ -3,7 +3,7 @@ LTSA-PCA is an extension of the LTSA model checker that supports the specificati
 
 ***
 
-This repository contains information related to the tool LTSA_PCA presented in the Foundations of Software Engineering, 2014.Link of the paper [here](http://www.doc.ic.ac.uk/~pr1810/publications/LTSA-PCA-ICSE2014-Demo.pdf)
+This repository contains information related to the tool LTSA_PCA presented in the Foundations of Software Engineering, 2014.Link of the paper The tool was originally presented in this [paper](http://www.doc.ic.ac.uk/~pr1810/publications/LTSA-PCA-ICSE2014-Demo.pdf)
 
 This repository *is not* the original repository for this tool. Here are some links to the original project:
 

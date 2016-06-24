@@ -15,9 +15,9 @@ This repository *is not* the original repository for this tool. Here are some li
 
 In this repository, for LTSA_PCA you will find:
 
-- :x: Source code (not available)
-- :white_check_mark: [The original tool](https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar) (available)
-- :white_check_mark: [Virtual Machine containing the tool](https://drive.google.com/open?id=0B93wGttsGeeMOWdxUDJKOGYwVDQ) (available)
+* :x: Source code (not available)
+* :white_check_mark: [The original tool](https://github.com/SoftwareEngineeringToolDemos/ICSE-2014-LTSA_PCA/blob/master/LTSA-PCA.jar) (available)
+* :white_check_mark: [Virtual machine containing tool](http://go.ncsu.edu/SE-tool-VMs)
 
 This tool is licensed under General Public License(GPL).
 
